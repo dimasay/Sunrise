@@ -18,6 +18,10 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.InvalidParameterException;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,8 +78,19 @@ public class EventTimeService {
             JsonParser jsonParser = new JsonParser();
             JsonObject responseJson = (JsonObject) jsonParser.parse(json);
             JsonObject result = responseJson.getAsJsonObject("results");
-            return new EventTimeDTO(result.get("sunrise").getAsString(), result.get("sunset").getAsString());
-        } catch (URISyntaxException | IOException e) {
+            String sunrise = result.get("sunrise").getAsString();
+            String sunset = result.get("sunset").getAsString();
+
+            SimpleDateFormat formatDate = new SimpleDateFormat("hh:mm:ss a");
+            LocalTime sunriseTime = new Time(formatDate.parse(sunrise).getTime()).toLocalTime();
+            LocalTime sunsetTime = new Time(formatDate.parse(sunset).getTime()).toLocalTime();
+            /*sunrise-sunset.org returns time in UTC +00:00 format. This application working only with Ukrainian cities.
+            Ukraine time format is UTC+02:00, because I just add 2 hours to response time.
+            */
+            String sunriseTimeInZone = sunriseTime.plusHours(2).toString();
+            String sunsetTimeInZone = sunsetTime.plusHours(2).toString();
+            return new EventTimeDTO(sunriseTimeInZone, sunsetTimeInZone);
+        } catch (URISyntaxException | IOException | ParseException e) {
             e.printStackTrace();
             return null;
         }
