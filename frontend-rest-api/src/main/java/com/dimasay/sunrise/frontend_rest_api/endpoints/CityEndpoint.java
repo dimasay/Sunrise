@@ -1,8 +1,8 @@
 package com.dimasay.sunrise.frontend_rest_api.endpoints;
 
-import com.dimasay.sunrise.domain.entities.City;
 import com.dimasay.sunrise.domain.services.CityService;
 import com.dimasay.sunrise.frontend_rest_api.dto.AddNewCityRequest;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +17,19 @@ import java.util.List;
 public class CityEndpoint {
     @Autowired
     private CityService cityService;
+    private static final Logger LOGGER = Logger.getLogger(CityEndpoint.class);
 
     @RequestMapping(path = "/city", produces = "application/json", method = RequestMethod.GET)
-    public List<City> getAllSupportedCities() {
+    public List<String> getAllSupportedCities() {
+        LOGGER.info("Getting all supported cities started.");
         return cityService.getAllSupportedCities();
     }
 
     @RequestMapping(path = "/city", consumes = "application/json", produces = "application/json", method = RequestMethod.PUT)
     public ResponseEntity addNewCity(@RequestBody AddNewCityRequest addNewCityRequest) {
+        LOGGER.info("Adding new city started.");
         cityService.addNewCity(addNewCityRequest.getName(), addNewCityRequest.getLatitude(), addNewCityRequest.getLongitude());
+        LOGGER.info(String.format("City %s saved to database.", addNewCityRequest.getName()));
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }
