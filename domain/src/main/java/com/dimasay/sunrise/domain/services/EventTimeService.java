@@ -13,7 +13,6 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -29,9 +28,13 @@ import java.util.Map;
 
 @Service
 public class EventTimeService {
-    @Autowired
-    private CityRepository cityRepository;
     private static final Logger LOGGER = Logger.getLogger(EventTimeService.class);
+    private CityRepository cityRepository;
+
+    public EventTimeService(CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
+    }
+
 
     public Map<String, String> getSunriseTime(List<String> cityNames, String date) {
         if (cityNames.isEmpty() || date.length() == 0) {
@@ -86,7 +89,7 @@ public class EventTimeService {
 
     private EventTimeDTO getEventTime(String cityName, String date) {
         try {
-            City city = cityRepository.findByName(cityName);
+            City city = (City) cityRepository.findByName(cityName);
             if (city == null) {
                 LOGGER.error(String.format("City: %s not supported", cityName));
                 return null;

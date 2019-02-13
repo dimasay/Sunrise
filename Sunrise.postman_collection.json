@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "59210327-f65b-48fa-8cbc-085f58415065",
+		"name": "Sunrise",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get sunrise",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/event_time?action=sunrise&city=Odessa&date=2019-02-14",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"event_time"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "sunrise"
+						},
+						{
+							"key": "city",
+							"value": "Odessa"
+						},
+						{
+							"key": "date",
+							"value": "2019-02-14"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put city",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Odessa\",\n\t\"latitude\":\"46.448891\",\n\t\"longitude\":\"30.733730\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/city",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"city"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get supported cities list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/city",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"city"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get sunset",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/event_time?action=sunset&city=Odessa&date=2019-02-14",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"event_time"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "sunset"
+						},
+						{
+							"key": "city",
+							"value": "Odessa"
+						},
+						{
+							"key": "date",
+							"value": "2019-02-14"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get sunset and sunrise",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/event_time?action=all&city=Odessa&date=2019-02-14",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"event_time"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "all"
+						},
+						{
+							"key": "city",
+							"value": "Odessa"
+						},
+						{
+							"key": "date",
+							"value": "2019-02-14"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

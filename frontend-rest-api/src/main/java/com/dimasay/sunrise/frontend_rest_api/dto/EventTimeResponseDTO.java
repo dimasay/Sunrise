@@ -5,6 +5,9 @@ public class EventTimeResponseDTO {
     private String sunrise;
     private String sunset;
 
+    public EventTimeResponseDTO() {
+    }
+
     public EventTimeResponseDTO(String city, String sunrise, String sunset) {
         this.city = city;
         this.sunrise = sunrise;
