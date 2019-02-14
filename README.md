@@ -1,19 +1,6 @@
 `Развертывание`
 
 **1. Создайте mysql бд:**
-
-CREATE TABLE cities (
-
-  id        BINARY(16) NOT NULL PRIMARY KEY,
-  
-  name      VARCHAR(256),
-  
-  latitude  FLOAT,
-  
-  longitude FLOAT
-);
-
-
 **2. Создайте переменные окружения:**
 
 - jdbcUrl - адрес к базе(пример jdbc:mysql://127.0.0.1:3306/sunrise?serverTimezone=UTC)
