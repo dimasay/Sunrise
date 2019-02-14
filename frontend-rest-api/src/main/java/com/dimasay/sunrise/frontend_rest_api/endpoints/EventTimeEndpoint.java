@@ -26,19 +26,19 @@ public class EventTimeEndpoint {
 
 
     @RequestMapping(path = "/event_time", produces = "application/json", method = RequestMethod.GET)
-    public ResponseEntity getEventTime(@RequestParam(value = "action") String action, @RequestParam(value = "city") List<String> cityNames, @RequestParam(value = "date") String date) {
+    public ResponseEntity getEventTime(@RequestParam(value = "action") String action, @RequestParam(value = "hours") int hours, @RequestParam(value = "city") List<String> cityNames, @RequestParam(value = "date") String date) {
         switch (action) {
             case "sunrise":
                 LOGGER.info(String.format("Search sunrise time for city/cities for date: &s started", date));
-                Map<String, String> sunrise = eventTimeService.getSunriseTime(cityNames, date);
+                Map<String, String> sunrise = eventTimeService.getSunriseTime(cityNames, date, hours);
                 return ResponseEntity.ok(convertMapToSunriseResponseList(sunrise));
             case "sunset":
                 LOGGER.info(String.format("Search sunset time for city/cities for date: &s started", date));
-                Map<String, String> sunset = eventTimeService.getSunsetTime(cityNames, date);
+                Map<String, String> sunset = eventTimeService.getSunsetTime(cityNames, date, hours);
                 return ResponseEntity.ok(convertMapToSunsetResponseList(sunset));
             case "all":
                 LOGGER.info(String.format("Search sunrise and sunset times for city/cities for date: &s started", date));
-                Map<String, EventTimeDTO> sunsetSunriseTimes = eventTimeService.getSunsetSunriseTimes(cityNames, date);
+                Map<String, EventTimeDTO> sunsetSunriseTimes = eventTimeService.getSunsetSunriseTimes(cityNames, date, hours);
                 return ResponseEntity.ok(convertMapToEventTimesResponseList(sunsetSunriseTimes));
             default:
                 LOGGER.error(String.format("Action is wrong or null: &s", action));

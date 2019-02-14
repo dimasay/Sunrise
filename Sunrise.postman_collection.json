@@ -15,7 +15,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/event_time?action=sunrise&city=Odessa&date=2019-02-14",
+					"raw": "http://localhost:8080/event_time?action=sunrise&hours=2&city=Odessa&date=2019-02-14",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -28,6 +28,10 @@
 						{
 							"key": "action",
 							"value": "sunrise"
+						},
+						{
+							"key": "hours",
+							"value": "2"
 						},
 						{
 							"key": "city",
@@ -105,7 +109,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/event_time?action=sunset&city=Odessa&date=2019-02-14",
+					"raw": "http://localhost:8080/event_time?action=sunset&hours=2&city=Odessa&date=2019-02-14",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -118,6 +122,10 @@
 						{
 							"key": "action",
 							"value": "sunset"
+						},
+						{
+							"key": "hours",
+							"value": "2"
 						},
 						{
 							"key": "city",
@@ -142,7 +150,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/event_time?action=all&city=Odessa&date=2019-02-14",
+					"raw": "http://localhost:8080/event_time?action=all&hours=2&city=Odessa&date=2019-02-14",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -155,6 +163,10 @@
 						{
 							"key": "action",
 							"value": "all"
+						},
+						{
+							"key": "hours",
+							"value": "2"
 						},
 						{
 							"key": "city",

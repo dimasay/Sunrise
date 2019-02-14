@@ -28,12 +28,13 @@ public class CityService {
 
     public City addNewCity(String name, Float latitude, Float longitude) {
         if (name == null || latitude == null || longitude == null) {
-            LOGGER.error(String.format("One of required variables is null! cityName=%s, latitude=%s, longitude=%s.", name, latitude, longitude));
-            throw new InvalidParameterException("One of parameters is null.");
+            String message = String.format("One of required variables is null! cityName=%s, latitude=%s, longitude=%s.", name, latitude, longitude);
+            LOGGER.error(message);
+            throw new InvalidParameterException(message);
         } else {
             City newCity = new City(name, latitude, longitude);
             cityRepository.save(newCity);
-            LOGGER.info(String.format("New city &s created.", newCity.getName()));
+            LOGGER.info(String.format("New city %s created.", newCity.getName()));
             return newCity;
         }
     }

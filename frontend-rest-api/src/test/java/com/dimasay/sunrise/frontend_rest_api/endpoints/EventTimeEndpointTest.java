@@ -47,6 +47,7 @@ public class EventTimeEndpointTest extends AbstractTest {
         String uri = "/event_time";
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
                 .param("action", action)
+                .param("hours", "2")
                 .param("city", "Odessa")
                 .param("date", "2019-02-12")
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
