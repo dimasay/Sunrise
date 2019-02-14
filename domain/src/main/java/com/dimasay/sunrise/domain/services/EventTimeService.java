@@ -1,8 +1,6 @@
 package com.dimasay.sunrise.domain.services;
 
-import com.dimasay.sunrise.domain.dto.EventTimeDTO;
-import com.dimasay.sunrise.domain.dto.ResultsDTO;
-import com.dimasay.sunrise.domain.dto.SunriseSunsetResponse;
+import com.dimasay.sunrise.domain.dto.*;
 import com.dimasay.sunrise.domain.entities.City;
 import com.dimasay.sunrise.domain.repositories.CityRepository;
 import org.apache.log4j.Logger;
@@ -14,9 +12,8 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class EventTimeService {
@@ -30,76 +27,70 @@ public class EventTimeService {
     }
 
 
-    public Map<String, String> getSunriseTime(List<String> cityNames, String date, int hoursToAdd) {
-        if (cityNames.isEmpty() || date.length() == 0) {
-            String message = String.format("One of required parameters is missing: cityNames = %s, date = %s", cityNames.size(), date);
-            LOGGER.error(message);
-            throw new InvalidParameterException(message);
+    public List<SunriseResponseDTO> getSunriseTime(GetEventTimeDTO getEventTimeDTO) {
+        if (getEventTimeDTO.getCityNames().isEmpty() || getEventTimeDTO.getDate().length() == 0) {
+            LOGGER.error(String.format("One of required parameters is missing: cityNames = %s, date = %s", getEventTimeDTO.getCityNames().size(), getEventTimeDTO.getDate()));
+            return new ArrayList<>();
         } else {
-            Map<String, String> sunriseTimes = new HashMap<>();
-            cityNames.forEach(cityName -> {
+            List<SunriseResponseDTO> sunriseResponseDTOS = new ArrayList<>();
+            getEventTimeDTO.getCityNames().forEach(cityName -> {
                 try {
-                    EventTimeDTO eventTimeDTO = getEventTime(cityName, date, hoursToAdd);
-                    if (eventTimeDTO != null) {
-                        sunriseTimes.put(cityName, eventTimeDTO.getSunrise());
+                    String sunrise = getEventTime(cityName, getEventTimeDTO.getDate(), getEventTimeDTO.getHoursToAdd()).getSunrise();
+                    if (sunrise != null) {
+                        sunriseResponseDTOS.add(new SunriseResponseDTO(cityName, sunrise));
                     }
                 } catch (ParseException e) {
                     LOGGER.error(e.getMessage());
-                    e.printStackTrace();
                 }
             });
 
             LOGGER.info("Sunrise time was found for all requested supported cities");
-            return sunriseTimes;
+            return sunriseResponseDTOS;
         }
     }
 
-    public Map<String, String> getSunsetTime(List<String> cityNames, String date, int hoursToAdd) {
-        if (cityNames.isEmpty() || date.length() == 0) {
-            String message = String.format("One of required parameters is missing: cityNames = %s, date = %s", cityNames.size(), date);
+    public List<SunsetResponseDTO> getSunsetTime(GetEventTimeDTO getEventTimeDTO) {
+        if (getEventTimeDTO.getCityNames().isEmpty() || getEventTimeDTO.getDate().length() == 0) {
+            String message = String.format("One of required parameters is missing: cityNames = %s, date = %s", getEventTimeDTO.getCityNames().size(), getEventTimeDTO.getDate());
             LOGGER.error(message);
             throw new InvalidParameterException(message);
         } else {
-            Map<String, String> sunsetTimes = new HashMap<>();
-
-            cityNames.forEach(cityName -> {
+            List<SunsetResponseDTO> sunsetResponseDTOS = new ArrayList<>();
+            getEventTimeDTO.getCityNames().forEach(cityName -> {
                 try {
-                    EventTimeDTO eventTimeDTO = getEventTime(cityName, date, hoursToAdd);
-                    if (eventTimeDTO != null) {
-                        sunsetTimes.put(cityName, eventTimeDTO.getSunset());
+                    String sunset = getEventTime(cityName, getEventTimeDTO.getDate(), getEventTimeDTO.getHoursToAdd()).getSunset();
+                    if (sunset != null) {
+                        sunsetResponseDTOS.add(new SunsetResponseDTO(cityName, sunset));
                     }
                 } catch (ParseException e) {
                     LOGGER.error(e.getMessage());
-                    e.printStackTrace();
                 }
             });
 
             LOGGER.info("Sunset time was found for all requested supported cities");
-            return sunsetTimes;
+            return sunsetResponseDTOS;
         }
     }
 
-    public Map<String, EventTimeDTO> getSunsetSunriseTimes(List<String> cityNames, String date, int hoursToAdd) {
-        if (cityNames.isEmpty() || date.length() == 0) {
-            LOGGER.error(String.format("One of required parameters is missing: cityNames = %s, date = %s", cityNames.size(), date));
+    public List<EventTimeResponseDTO> getSunsetSunriseTimes(GetEventTimeDTO getEventTimeDTO) {
+        if (getEventTimeDTO.getCityNames().isEmpty() || getEventTimeDTO.getDate().length() == 0) {
+            LOGGER.error(String.format("One of required parameters is missing: cityNames = %s, date = %s", getEventTimeDTO.getCityNames().size(), getEventTimeDTO.getDate()));
             throw new InvalidParameterException("One of parameters is null");
         } else {
-            Map<String, EventTimeDTO> sunsetSunriseTimes = new HashMap<>();
-
-            cityNames.forEach(cityName -> {
+            List<EventTimeResponseDTO> eventTimeResponseDTOS = new ArrayList<>();
+            getEventTimeDTO.getCityNames().forEach(cityName -> {
                 try {
-                    EventTimeDTO eventTimeDTO = getEventTime(cityName, date, hoursToAdd);
+                    EventTimeDTO eventTimeDTO = getEventTime(cityName, getEventTimeDTO.getDate(), getEventTimeDTO.getHoursToAdd());
                     if (eventTimeDTO != null) {
-                        sunsetSunriseTimes.put(cityName, eventTimeDTO);
+                        eventTimeResponseDTOS.add(new EventTimeResponseDTO(cityName, eventTimeDTO.getSunrise(), eventTimeDTO.getSunset()));
                     }
                 } catch (ParseException e) {
                     LOGGER.error(e.getMessage());
-                    e.printStackTrace();
                 }
             });
 
             LOGGER.info("Sunrise and sunset time were found for all requested supported cities");
-            return sunsetSunriseTimes;
+            return eventTimeResponseDTOS;
         }
     }
 

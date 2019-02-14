@@ -19,9 +19,9 @@ public class CityService {
     }
 
 
-    public List<String> getAllSupportedCities() {
-        List<String> supportedCities = new ArrayList<>();
-        cityRepository.findAll().forEach(city -> supportedCities.add(city.getName()));
+    public List<City> getAllSupportedCities() {
+        List<City> supportedCities = new ArrayList<>();
+        cityRepository.findAll().forEach(city -> supportedCities.add(city));
         LOGGER.info("List of supported cities received.");
         return supportedCities;
     }

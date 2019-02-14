@@ -1,5 +1,6 @@
 package com.dimasay.sunrise.frontend_rest_api.endpoints;
 
+import com.dimasay.sunrise.domain.entities.City;
 import com.dimasay.sunrise.domain.services.CityService;
 import com.dimasay.sunrise.frontend_rest_api.dto.AddNewCityRequest;
 import org.apache.log4j.Logger;
@@ -20,9 +21,14 @@ public class CityEndpoint {
     private static final Logger LOGGER = Logger.getLogger(CityEndpoint.class);
 
     @RequestMapping(path = "/city", produces = "application/json", method = RequestMethod.GET)
-    public List<String> getAllSupportedCities() {
+    public ResponseEntity getAllSupportedCities() {
         LOGGER.info("Getting all supported cities started.");
-        return cityService.getAllSupportedCities();
+        List<City> cities = cityService.getAllSupportedCities();
+        if (cities.isEmpty()) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } else {
+            return ResponseEntity.ok(cities);
+        }
     }
 
     @RequestMapping(path = "/city", consumes = "application/json", produces = "application/json", method = RequestMethod.PUT)

@@ -1,8 +1,8 @@
 package com.dimasay.sunrise.frontend_rest_api.endpoints;
 
-import com.dimasay.sunrise.frontend_rest_api.dto.EventTimeResponseDTO;
-import com.dimasay.sunrise.frontend_rest_api.dto.SunriseResponseDTO;
-import com.dimasay.sunrise.frontend_rest_api.dto.SunsetResponseDTO;
+import com.dimasay.sunrise.domain.dto.EventTimeResponseDTO;
+import com.dimasay.sunrise.domain.dto.SunriseResponseDTO;
+import com.dimasay.sunrise.domain.dto.SunsetResponseDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;

@@ -37,7 +37,7 @@ public class CityServiceTest {
 
     @Test
     public void getAllSupportedCities() {
-        List<String> cities = cityService.getAllSupportedCities();
+        List<City> cities = cityService.getAllSupportedCities();
         assertNotNull(cities);
     }
 }

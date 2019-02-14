@@ -1,4 +1,4 @@
-package com.dimasay.sunrise.frontend_rest_api.dto;
+package com.dimasay.sunrise.domain.dto;
 
 public class SunriseResponseDTO {
     private String city;
