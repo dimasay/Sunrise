@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet author="authorName" id="changelog-1.0">
+        <createTable tableName="cities">
+            <column name="id" type="BINARY(16)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(256)"/>
+            <column name="latitude" type="FLOAT"/>
+            <column name="longitude" type="FLOAT"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
