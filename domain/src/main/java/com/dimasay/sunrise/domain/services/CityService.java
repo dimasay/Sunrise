@@ -5,7 +5,6 @@ import com.dimasay.sunrise.domain.repositories.CityRepository;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class CityService {
 
     public List<City> getAllSupportedCities() {
         List<City> supportedCities = new ArrayList<>();
-        cityRepository.findAll().forEach(city -> supportedCities.add(city));
+        cityRepository.findAll().forEach(supportedCities::add);
         LOGGER.info("List of supported cities received.");
         return supportedCities;
     }
@@ -30,7 +29,7 @@ public class CityService {
         if (name == null || latitude == null || longitude == null) {
             String message = String.format("One of required variables is null! cityName=%s, latitude=%s, longitude=%s.", name, latitude, longitude);
             LOGGER.error(message);
-            throw new InvalidParameterException(message);
+            return null;
         } else {
             City newCity = new City(name, latitude, longitude);
             cityRepository.save(newCity);

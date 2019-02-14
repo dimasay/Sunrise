@@ -35,9 +35,9 @@ public class EventTimeService {
             List<SunriseResponseDTO> sunriseResponseDTOS = new ArrayList<>();
             getEventTimeDTO.getCityNames().forEach(cityName -> {
                 try {
-                    String sunrise = getEventTime(cityName, getEventTimeDTO.getDate(), getEventTimeDTO.getHoursToAdd()).getSunrise();
-                    if (sunrise != null) {
-                        sunriseResponseDTOS.add(new SunriseResponseDTO(cityName, sunrise));
+                    EventTimeDTO eventTimeDTO = getEventTime(cityName, getEventTimeDTO.getDate(), getEventTimeDTO.getHoursToAdd());
+                    if (eventTimeDTO != null) {
+                        sunriseResponseDTOS.add(new SunriseResponseDTO(cityName, eventTimeDTO.getSunrise()));
                     }
                 } catch (ParseException e) {
                     LOGGER.error(e.getMessage());
@@ -58,9 +58,9 @@ public class EventTimeService {
             List<SunsetResponseDTO> sunsetResponseDTOS = new ArrayList<>();
             getEventTimeDTO.getCityNames().forEach(cityName -> {
                 try {
-                    String sunset = getEventTime(cityName, getEventTimeDTO.getDate(), getEventTimeDTO.getHoursToAdd()).getSunset();
-                    if (sunset != null) {
-                        sunsetResponseDTOS.add(new SunsetResponseDTO(cityName, sunset));
+                    EventTimeDTO eventTimeDTO = getEventTime(cityName, getEventTimeDTO.getDate(), getEventTimeDTO.getHoursToAdd());
+                    if (eventTimeDTO != null) {
+                        sunsetResponseDTOS.add(new SunsetResponseDTO(cityName, eventTimeDTO.getSunset()));
                     }
                 } catch (ParseException e) {
                     LOGGER.error(e.getMessage());

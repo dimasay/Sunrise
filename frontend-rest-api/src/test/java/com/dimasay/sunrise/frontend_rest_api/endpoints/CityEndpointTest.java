@@ -1,5 +1,6 @@
 package com.dimasay.sunrise.frontend_rest_api.endpoints;
 
+import com.dimasay.sunrise.domain.entities.City;
 import com.dimasay.sunrise.domain.repositories.CityRepository;
 import com.dimasay.sunrise.frontend_rest_api.dto.AddNewCityRequest;
 import org.junit.Before;
@@ -24,17 +25,7 @@ public class CityEndpointTest extends AbstractTest {
 
     @Test
     public void addNewCity() throws Exception {
-        String uri = "/city";
-        AddNewCityRequest addNewCityRequest = new AddNewCityRequest();
-        addNewCityRequest.setName("Kotovsk");
-        addNewCityRequest.setLatitude(47.737626F);
-        addNewCityRequest.setLongitude(29.555124F);
-
-        String inputJson = super.mapToJson(addNewCityRequest);
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(uri)
-                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
-
-        int status = mvcResult.getResponse().getStatus();
+        int status = addCity().getResponse().getStatus();
         assertEquals(200, status);
 
         cityRepository.delete(cityRepository.findByName("Kotovsk"));
@@ -42,6 +33,8 @@ public class CityEndpointTest extends AbstractTest {
 
     @Test
     public void getAllSupportedCities() throws Exception {
+        addCity();
+
         String uri = "/city";
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
@@ -49,7 +42,21 @@ public class CityEndpointTest extends AbstractTest {
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
         String content = mvcResult.getResponse().getContentAsString();
-        String[] citiesList = super.mapFromJson(content, String[].class);
+        City[] citiesList = super.mapFromJson(content, City[].class);
         assertTrue(citiesList.length > 0);
+
+        cityRepository.delete(cityRepository.findByName("Kotovsk"));
+    }
+
+    private MvcResult addCity() throws Exception {
+        String uri = "/city";
+        AddNewCityRequest addNewCityRequest = new AddNewCityRequest();
+        addNewCityRequest.setName("Kotovsk");
+        addNewCityRequest.setLatitude(47.737626F);
+        addNewCityRequest.setLongitude(29.555124F);
+
+        String inputJson = super.mapToJson(addNewCityRequest);
+        return mvc.perform(MockMvcRequestBuilders.put(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
     }
 }

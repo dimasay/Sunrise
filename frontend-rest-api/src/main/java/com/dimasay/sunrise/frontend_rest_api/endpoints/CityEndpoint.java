@@ -34,8 +34,12 @@ public class CityEndpoint {
     @RequestMapping(path = "/city", consumes = "application/json", produces = "application/json", method = RequestMethod.PUT)
     public ResponseEntity addNewCity(@RequestBody AddNewCityRequest addNewCityRequest) {
         LOGGER.info("Adding new city started.");
-        cityService.addNewCity(addNewCityRequest.getName(), addNewCityRequest.getLatitude(), addNewCityRequest.getLongitude());
-        LOGGER.info(String.format("City %s saved to database.", addNewCityRequest.getName()));
-        return ResponseEntity.ok(HttpStatus.OK);
+        City city = cityService.addNewCity(addNewCityRequest.getName(), addNewCityRequest.getLatitude(), addNewCityRequest.getLongitude());
+        if (city != null) {
+            LOGGER.info(String.format("City %s saved to database.", addNewCityRequest.getName()));
+            return ResponseEntity.ok(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 }
