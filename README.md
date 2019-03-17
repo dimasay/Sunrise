@@ -1,25 +1,23 @@
-`Развертывание`
+**1. Create mySQL database**
 
-**1. Создайте mysql бд**
+**2. Create environment variables:**
 
-**2. Создайте переменные окружения:**
+- jdbcUrl - database url(ex: jdbc:mysql://127.0.0.1:3306/sunrise?serverTimezone=UTC)
+- jdbcUser - database username
+- jdbcPassword - database username password
 
-- jdbcUrl - адрес к базе(пример jdbc:mysql://127.0.0.1:3306/sunrise?serverTimezone=UTC)
-- jdbcUser - имя пользователя базы
-- jdbcPassword - пароль к базе
+**3. Add collection of queries to postman from file "Sunrise.postman_collection.json" from root**
 
-**3. Добавьте коллекцию запросов в postman из файла "Sunrise.postman_collection.json" из корня проекта**
+**4. For succesful testing you should add to database city: Odessa(already created query in postman "Put city")**
 
-**4. Для успешного прохождения тестов добавьте в базу город Odessa(готовый запрос в postman "Put city")**
-
-`Руководство пользователя`
+`Manual`
 
 _(при использовании коллекции запросов для postman)_
 
-- Вы можете добавить в базу любой город Украины.
-- Название города, широта, долгота - обязательные параметры. Передаются json'ом.
-- При помощь запроса GET supported cities вы можете увидеть список поддерживаемых городов.
-- При помощи запросов Get sunrise, Get sunset, Get sunset and sunrise Вы можете узнать нужные Вам сведения.
-- Поддерживается запрос для нескольких городов сразу, для этого достаточно ввести названия городов через запятую для параметра city:
+- You can add any cities from Ukraine.
+- City name, Название города, latitude, longitude - required parameters.
+- With GET query "supported cities" you can see list of supported cities.
+- WIth Get queries "Get sunrise", "Get sunset", "Get sunset and sunrise" you can get all information what you need.
+- The query is supported for several cities at once, it is enough to enter the names of cities separated by commas for the city parameter:
 
 city=Kyiv, Odessa, Lvov
